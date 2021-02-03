@@ -8,10 +8,22 @@ public enum DiceType
     Blue,
     Green,
     Purple,
-    Yellow
+    Yellow,
+    None
 }
 
 public class Dice : MonoBehaviour
 {
+    public DiceType diceType = DiceType.None;
+
+    public int damage;
+    public int mp;
+    public int perMP;
+    public int critical;
+
+    private int lv;
+
+    public float attackSpeed;
+
 
 }
