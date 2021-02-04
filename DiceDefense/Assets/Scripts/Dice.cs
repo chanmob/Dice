@@ -20,10 +20,13 @@ public class Dice : MonoBehaviour
     public int mp;
     public int perMP;
     public int critical;
+    public int addDamage;
+    public int addMP;
+    public int addPerMP;
+    public int addCritical;
 
     private int lv;
 
     public float attackSpeed;
-
-
+    public float addAttackSpeed;
 }
