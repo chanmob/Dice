@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6276782459752830992}
   - component: {fileID: 4982684923932922906}
+  - component: {fileID: -9162981173676821473}
   m_Layer: 0
   m_Name: Dice_Y
   m_TagString: Untagged
@@ -83,6 +84,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-9162981173676821473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034675449444979524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c598fa998c7554f893eca91707a53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceType: 4
+  damage: 0
+  mp: 0
+  perMP: 0
+  critical: 0
+  attackSpeed: 0
 --- !u!1 &8917341685939952662
 GameObject:
   m_ObjectHideFlags: 0

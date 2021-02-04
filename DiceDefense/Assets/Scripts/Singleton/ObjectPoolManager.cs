@@ -26,6 +26,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     private Stack<Enemy> _stack_Enemy;
 
+    public Transform diceParent;
+    public Transform enemyParent;
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -156,24 +159,36 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
                     break;
             }
 
+            newDice.transform.SetParent(diceParent);
             newDice.gameObject.SetActive(false);
         }
     }
 
     public Enemy GetEnemy()
     {
-        Enemy enemy = null;
+        if (_stack_Enemy.Count == 0)
+            MakeEnemy(1);
 
+        Enemy enemy = _stack_Enemy.Pop();
         return enemy;
     }
 
-    public void ReturnEnemy()
+    public void ReturnEnemy(Enemy enemy)
     {
+        _stack_Enemy.Push(enemy);
 
+        if (enemy.gameObject.activeSelf)
+            enemy.gameObject.SetActive(false);
     }
 
     private void MakeEnemy(int count)
     {
-
+        for(int i = 0; i < count; i++)
+        {
+            Enemy newEnemy = Instantiate(_enemy_Prefab);
+            _stack_Enemy.Push(newEnemy);
+            newEnemy.transform.SetParent(enemyParent);
+            newEnemy.gameObject.SetActive(false);
+        }
     }
 }
