@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class InGameManager : Singleton<InGameManager>
 {
+    public readonly float InfoDistance = 0.3f;
+    public readonly float CollaboDistance = 0.5f;
+
+    public readonly string[] DiceColorHexCode = new string[5]
+    {
+        "#FFACB5","#9BDAF2","#C7E8A7","#9F8DE8","#FFDF9E"
+    };
+
     private List<Enemy> _roundEnemy;
 
-    private int _round;
+    public List<Dice> _createdDice;
+
+    private int _round = 0;
 
     private void Start()
     {
         _roundEnemy = new List<Enemy>();
+        _createdDice = new List<Dice>();
     }
 
     public Enemy GetNearEnemy(Vector3 dicePos)
@@ -35,5 +46,16 @@ public class InGameManager : Singleton<InGameManager>
         }
 
         return enemy;
+    }
+
+    private IEnumerator RoundCoroutine()
+    {
+        while (true)
+        {
+            _round++;
+
+
+            yield return new WaitUntil(() => _roundEnemy.Count == 0);
+        }
     }
 }

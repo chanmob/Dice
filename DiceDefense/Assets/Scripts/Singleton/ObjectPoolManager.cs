@@ -26,8 +26,14 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     private Stack<Enemy> _stack_Enemy;
 
+    [SerializeField]
+    private Bullet _bullet_Prefab;
+
+    private Stack<Bullet> _stack_Bullet;
+
     public Transform diceParent;
     public Transform enemyParent;
+    public Transform bulletParent;
 
     protected override void OnAwake()
     {
@@ -40,6 +46,8 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         _stack_YellowDice = new Stack<Dice>();
 
         _stack_Enemy = new Stack<Enemy>();
+
+        _stack_Bullet = new Stack<Bullet>();
     }
 
     public Dice GetDice(DiceType diceType)
@@ -189,6 +197,34 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             _stack_Enemy.Push(newEnemy);
             newEnemy.transform.SetParent(enemyParent);
             newEnemy.gameObject.SetActive(false);
+        }
+    }
+
+    public Bullet GetBullet()
+    {
+        if (_stack_Bullet.Count == 0)
+            MakeBullet(1);
+
+        Bullet bullet = _stack_Bullet.Pop();
+        return bullet;
+    }
+
+    public void ReturnBullet(Bullet bullet)
+    {
+        _stack_Bullet.Push(bullet);
+
+        if (bullet.gameObject.activeSelf)
+            bullet.gameObject.SetActive(false);
+    }
+
+    private void MakeBullet(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Bullet newBullet = Instantiate(_bullet_Prefab);
+            _stack_Bullet.Push(newBullet);
+            newBullet.transform.SetParent(bulletParent);
+            newBullet.gameObject.SetActive(false);
         }
     }
 }

@@ -859,8 +859,10 @@ MonoBehaviour:
   _dice_Yellow_Prefab: {fileID: -9162981173676821473, guid: 82c4bb6d0277c634dab49b86c56464c9,
     type: 3}
   _enemy_Prefab: {fileID: 0}
+  _bullet_Prefab: {fileID: 0}
   diceParent: {fileID: 1446906349}
   enemyParent: {fileID: 215035967}
+  bulletParent: {fileID: 0}
 --- !u!4 &804098449
 Transform:
   m_ObjectHideFlags: 0
@@ -1792,6 +1794,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
+  _createdDice:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1519307872
 Transform:
   m_ObjectHideFlags: 0
