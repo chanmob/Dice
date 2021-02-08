@@ -9,4 +9,29 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public int greenDiceUpgrade;
     public int purpleDiceUpgrade;
     public int yellowDiceUpgrade;
+
+    public void RedDiceUpgrade()
+    {
+
+    }
+
+    public void BlueDiceUpgrade()
+    {
+
+    }
+
+    public void GreenDiceUpgrade()
+    {
+
+    }
+
+    public void PurpleDiceUpgrade()
+    {
+
+    }
+
+    public void YellowDiceUpgrade()
+    {
+
+    }
 }

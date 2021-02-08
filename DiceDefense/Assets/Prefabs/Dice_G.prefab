@@ -193,8 +193,14 @@ MonoBehaviour:
   addCritical: 0
   attackSpeed: 0
   addAttackSpeed: 0
-  diceColor: {fileID: 0}
-  diceLv: []
+  diceColor: {fileID: 253054454673030089}
+  diceLv:
+  - {fileID: 6008855641241867008}
+  - {fileID: 4395093047729201051}
+  - {fileID: 529666599677557754}
+  - {fileID: 2405745526568363143}
+  - {fileID: 4226993036830814836}
+  - {fileID: 5786449231194851425}
 --- !u!1 &345991017209114426
 GameObject:
   m_ObjectHideFlags: 0

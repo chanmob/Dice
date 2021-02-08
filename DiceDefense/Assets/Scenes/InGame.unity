@@ -1794,9 +1794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
-  _createdDice:
-  - {fileID: 0}
-  - {fileID: 0}
+  _createdDice: []
 --- !u!4 &1519307872
 Transform:
   m_ObjectHideFlags: 0

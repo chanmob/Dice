@@ -17,6 +17,7 @@ public class InGameManager : Singleton<InGameManager>
     public List<Dice> _createdDice;
 
     private int _round = 0;
+    private int _money;
 
     private void Start()
     {
@@ -57,5 +58,10 @@ public class InGameManager : Singleton<InGameManager>
 
             yield return new WaitUntil(() => _roundEnemy.Count == 0);
         }
+    }
+
+    public void GetMoney(int money)
+    {
+        _money += money;
     }
 }
