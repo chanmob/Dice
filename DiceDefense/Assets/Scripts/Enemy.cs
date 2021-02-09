@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private const float minDistance = 0.1f;
+
     private int _hp;
 
-    private float speed = 1f;
+    private float speed = 0.0075f;
 
     private bool isDie = false;
+
+    private IEnumerator _coroutine;
+
+    private void Start()
+    {
+        _coroutine = MoveCoroutine();
+        StartCoroutine(_coroutine);
+    }
 
     public void Hit(int dmg)
     {
@@ -44,8 +54,18 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator MoveCoroutine()
     {
-        while (true)
+        int idx = 0;
+        int lineLen = InGameManager.instance.lines.Length;
+
+        while (idx < lineLen)
         {
+            transform.position = Vector2.MoveTowards(transform.position, InGameManager.instance.lines[idx].position, speed);
+
+            float diff = Vector2.Distance(transform.position, InGameManager.instance.lines[idx].position);
+
+            if (diff <= minDistance)
+                idx++;
+
             yield return null;
         }
     }

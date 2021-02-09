@@ -20,8 +20,7 @@ public class InGameManager : Singleton<InGameManager>
 
     public List<Vector2> createPositionList;
 
-    [SerializeField]
-    private GameObject[] lines;
+    public Transform[] lines;
 
     [SerializeField]
     private Transform _createPositionParent;
