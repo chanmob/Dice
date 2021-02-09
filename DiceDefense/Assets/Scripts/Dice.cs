@@ -39,63 +39,109 @@ public class Dice : MonoBehaviour
     public float attackSpeed;
     public float addAttackSpeed;
 
-    private Vector3 mousePosition;
-    private Vector3 offset;
-    private Vector3 pos;
+    private Vector3 _mousePosition;
+    private Vector3 _offset;
+
+    public Vector2 pos;
 
     [SerializeField]
-    private SpriteRenderer diceColor;
+    private SpriteRenderer _diceColor;
 
     [SerializeField]
-    private GameObject[] diceLv;
+    private GameObject[] _diceLv;
 
-    private IEnumerator coroutine;
+    private IEnumerator _coroutine;
 
     #region MouseControl
     private void OnMouseDown()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        offset = transform.position - mousePosition;
+        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _offset = transform.position - _mousePosition;
     }
 
     private void OnMouseDrag()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = mousePosition + offset;
+        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = _mousePosition + _offset;
     }
 
     private void OnMouseUp()
     {
-        if (Vector2.Distance(pos, mousePosition) < InGameManager.instance.InfoDistance)
+        if (Vector2.Distance(pos, _mousePosition) < InGameManager.instance.InfoDistance)
         {
             //TODO 정보띄우기
+            transform.position = pos;
         }
         else
         {
             Dice collaboDice = null;
-            float distance = float.MaxValue;
+            float distanceToDice = float.MaxValue;
 
-            int cnt = InGameManager.instance._createdDice.Count;
+            int cnt = InGameManager.instance.createdDice.Count;
 
             for(int i = 0; i < cnt; i++)
             {
-                if (InGameManager.instance._createdDice[i] == this)
+                if (InGameManager.instance.createdDice[i] == this)
                     continue;
 
-                var diff = Vector2.Distance(this.transform.position, InGameManager.instance._createdDice[i].transform.position);
+                var diff = Vector2.Distance(this.transform.position, InGameManager.instance.createdDice[i].transform.position);
 
-                if (diff < distance)
+                if (diff < distanceToDice)
                 {
-                    distance = diff;
-                    collaboDice = InGameManager.instance._createdDice[i];
+                    distanceToDice = diff;
+                    collaboDice = InGameManager.instance.createdDice[i];
                 }
             }
 
-            if (collaboDice != null && distance < InGameManager.instance.CollaboDistance)
+            if (collaboDice != null && distanceToDice < InGameManager.instance.CollaboDistance)
             {
-                collaboDice.Collabo();
-                InGameManager.instance._createdDice.Remove(this);
-                gameObject.SetActive(false);
+                if(collaboDice.diceType == diceType && collaboDice.lv == lv)
+                {
+                    collaboDice.Collabo();
+                    InGameManager.instance.createdDice.Remove(this);
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    Vector2 collaboDicePos = collaboDice.pos;
+                    
+                    collaboDice.transform.position = pos;
+                    collaboDice.pos = pos;
+
+                    transform.position = collaboDicePos;
+                    pos = collaboDicePos;
+                }
+            }
+            else
+            {
+                Vector2? targetPos = null;
+
+                int positionCnt = InGameManager.instance.createPositionList.Count;
+                float distanceToPos = float.MaxValue;
+
+                for (int i = 0; i < positionCnt; i++)
+                {
+                    var diff = Vector2.Distance(this.transform.position, InGameManager.instance.createPositionList[i]);
+
+                    if (diff < distanceToPos)
+                    {
+                        distanceToPos = diff;
+                        targetPos = InGameManager.instance.createPositionList[i];
+                    }
+                }
+
+                if(targetPos != null && distanceToPos < InGameManager.instance.CollaboDistance)
+                {
+                    Vector2 tp = (Vector2)targetPos;
+
+                    InGameManager.instance.createPositionList.Add(pos);
+                    InGameManager.instance.createPositionList.Remove(tp);
+                    transform.position = tp;
+                }
+                else
+                {
+                    transform.position = pos;
+                }
             }
         }
     }
@@ -190,8 +236,18 @@ public class Dice : MonoBehaviour
         switch (diceType)
         {
             case DiceType.Red:
+                int layerMask = 1 << LayerMask.NameToLayer("Enemy");
+                Collider2D[] enemys = Physics2D.OverlapCircleAll(e.transform.position, 1f, layerMask);
+
+                int len = enemys.Length;
+
+                for(int i = 0; i < len; i++)
+                {
+                    enemys[i].GetComponent<Enemy>().Hit(damage + UpgradeManager.instance.redDiceUpgrade);
+                }
                 break;
             case DiceType.Blue:
+                e.Slow(1f);
                 break;
             case DiceType.Green:
                 break;
@@ -204,10 +260,10 @@ public class Dice : MonoBehaviour
 
     public void StopAttackCoroutine()
     {
-        if(coroutine != null)
+        if(_coroutine != null)
         {
-            StopCoroutine(coroutine);
-            coroutine = null;
+            StopCoroutine(_coroutine);
+            _coroutine = null;
         }
     }
 
@@ -231,21 +287,21 @@ public class Dice : MonoBehaviour
             return;
         }
 
-        diceColor.color = c;
+        _diceColor.color = c;
 
-        int len = diceLv.Length;
+        int len = _diceLv.Length;
         for (int i = 0; i < len; i++)
         {
-            diceLv[i].SetActive(false);
+            _diceLv[i].SetActive(false);
         }
 
-        SpriteRenderer[] srs = diceLv[lv].GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] srs = _diceLv[lv].GetComponentsInChildren<SpriteRenderer>();
         int srLen = srs.Length;
         for (int i = 0; i < srLen; i++)
         {
             srs[i].color = c;
         }
 
-        diceLv[lv].SetActive(true);
+        _diceLv[lv].SetActive(true);
     }
 }

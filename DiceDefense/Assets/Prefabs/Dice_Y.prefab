@@ -712,6 +712,7 @@ GameObject:
   - component: {fileID: 9160156972090466987}
   - component: {fileID: 843101182682637468}
   - component: {fileID: 3897523078352442278}
+  - component: {fileID: -8070693175562284082}
   m_Layer: 0
   m_Name: Dice_Y
   m_TagString: Untagged
@@ -813,14 +814,41 @@ MonoBehaviour:
   addCritical: 0
   attackSpeed: 0
   addAttackSpeed: 0
-  diceColor: {fileID: 2776660006577317985}
-  diceLv:
+  pos: {x: 0, y: 0}
+  _diceColor: {fileID: 2776660006577317985}
+  _diceLv:
   - {fileID: 8532091903437193384}
   - {fileID: 1870449496702225459}
   - {fileID: 2473156554059540562}
   - {fileID: 317863247167960879}
   - {fileID: 2279632827305107932}
   - {fileID: 8450497645473766345}
+--- !u!61 &-8070693175562284082
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796503120021363391}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0
 --- !u!1 &2909847962657814412
 GameObject:
   m_ObjectHideFlags: 0
