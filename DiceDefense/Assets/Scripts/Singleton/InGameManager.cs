@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InGameManager : Singleton<InGameManager>
 {
+    private const float GenerationCycleTime = 0.5f;
+
     public readonly float InfoDistance = 0.3f;
     public readonly float CollaboDistance = 0.5f;
 
@@ -12,12 +14,14 @@ public class InGameManager : Singleton<InGameManager>
         "#FFACB5","#9BDAF2","#C7E8A7","#9F8DE8","#FFDF9E"
     };
 
-    private List<Enemy> _roundEnemy;
+    public List<Enemy> roundEnemy;
 
     public List<Dice> createdDice;
 
     public List<Vector2> createPositionList;
 
+    [SerializeField]
+    private GameObject[] lines;
 
     [SerializeField]
     private Transform _createPositionParent;
@@ -38,7 +42,7 @@ public class InGameManager : Singleton<InGameManager>
 
     private void Start()
     {
-        _roundEnemy = new List<Enemy>();
+        roundEnemy = new List<Enemy>();
         createdDice = new List<Dice>();
         createPositionList = new List<Vector2>();
 
@@ -48,11 +52,13 @@ public class InGameManager : Singleton<InGameManager>
         {
             createPositionList.Add(positions[i].position);
         }
+
+        StartCoroutine(RoundCoroutine());
     }
 
     public Enemy GetNearEnemy(Vector3 dicePos)
     {
-        int cnt = _roundEnemy.Count;
+        int cnt = roundEnemy.Count;
 
         if (cnt == 0)
             return null;
@@ -62,12 +68,12 @@ public class InGameManager : Singleton<InGameManager>
 
         for(int i = 0; i < cnt; i++)
         {
-            float diff = (_roundEnemy[i].transform.position - dicePos).sqrMagnitude;
+            float diff = (roundEnemy[i].transform.position - dicePos).sqrMagnitude;
 
             if(diff < distance)
             {
                 distance = diff;
-                enemy = _roundEnemy[i];
+                enemy = roundEnemy[i];
             }
         }
 
@@ -80,8 +86,20 @@ public class InGameManager : Singleton<InGameManager>
         {
             _round++;
 
+            for(int i = 0; i < _round; i++)
+            {
+                Enemy e = ObjectPoolManager.instance.GetEnemy();
+                roundEnemy.Add(e);
+            }
 
-            yield return new WaitUntil(() => _roundEnemy.Count == 0);
+            for(int i = 0; i < _round; i++)
+            {
+                roundEnemy[i].transform.position = lines[0].transform.position;
+                roundEnemy[i].gameObject.SetActive(true);
+                yield return new WaitForSeconds(GenerationCycleTime);   
+            }
+
+            yield return new WaitUntil(() => roundEnemy.Count == 0);
         }
     }
 

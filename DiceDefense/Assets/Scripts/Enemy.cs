@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     public void Hit(int dmg)
     {
+        Debug.Log(dmg);
         _hp -= dmg;
 
         if(_hp <= 0)
@@ -32,10 +33,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        if (isDie == false)
-            isDie = true;
+        if (isDie)
+            return;
 
+        isDie = true;
 
+        InGameManager.instance.roundEnemy.Remove(this);
+        ObjectPoolManager.instance.ReturnEnemy(this);
     }
 
     private IEnumerator MoveCoroutine()

@@ -12,7 +12,7 @@ public enum DiceType
     None
 }
 
-public class Dice : MonoBehaviour
+public abstract class Dice : MonoBehaviour
 {
     public const int MaxLv = 5;
 
@@ -149,7 +149,13 @@ public class Dice : MonoBehaviour
 
     private void Start()
     {
-        
+        damage = _damage;
+        mp = _mp;
+        perMP = _perMP;
+        critical = _critical;
+        attackSpeed = _attackSpeed;
+
+        StartCoroutine(AttackCoroutine());
     }
 
     private IEnumerator AttackCoroutine()
@@ -158,6 +164,8 @@ public class Dice : MonoBehaviour
 
         while (true)
         {
+            yield return new WaitForSeconds(soa);
+
             Enemy e = InGameManager.instance.GetNearEnemy(pos);
 
             if (e != null)
@@ -180,83 +188,83 @@ public class Dice : MonoBehaviour
                 b.targetEnemy = e;
                 b.gameObject.SetActive(true);
             }
-
-            yield return new WaitForSeconds(soa);
         }
     }
 
+    public abstract void Attack(Enemy e);
+    public abstract void SkillAttack(Enemy e);
 
-    private void Attack(Enemy e)
-    {
-        bool cri = false;
+    //private void Attack(Enemy e)
+    //{
+    //    bool cri = false;
 
-        int randomCritical = Random.Range(1, 101);
-        if(randomCritical <= critical)
-        {
-            cri = true;
-        }
+    //    int randomCritical = Random.Range(1, 101);
+    //    if(randomCritical <= critical)
+    //    {
+    //        cri = true;
+    //    }
 
-        switch (diceType)
-        {
-            case DiceType.Red:
-                if(cri)
-                    e.Hit((damage + UpgradeManager.instance.redDiceUpgrade) * 2);
-                else
-                    e.Hit(damage + UpgradeManager.instance.redDiceUpgrade);
-                break;
-            case DiceType.Blue:
-                if (cri)
-                    e.Hit((damage + UpgradeManager.instance.blueDiceUpgrade) * 2);
-                else
-                    e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);
-                break;
-            case DiceType.Green:
-                if (cri)
-                    e.Hit((damage + UpgradeManager.instance.greenDiceUpgrade) * 2);
-                else
-                    e.Hit(damage + UpgradeManager.instance.greenDiceUpgrade);
-                break;
-            case DiceType.Purple:
-                if (cri)
-                    e.Hit((damage + UpgradeManager.instance.purpleDiceUpgrade) * 2);
-                else
-                    e.Hit(damage + UpgradeManager.instance.purpleDiceUpgrade);
-                break;
-            case DiceType.Yellow:
-                if (cri)
-                    e.Hit((damage + UpgradeManager.instance.yellowDiceUpgrade) * 2);
-                else
-                    e.Hit(damage + UpgradeManager.instance.yellowDiceUpgrade);
-                break;
-        }
-    }
+    //    switch (diceType)
+    //    {
+    //        case DiceType.Red:
+    //            if(cri)
+    //                e.Hit((damage + UpgradeManager.instance.redDiceUpgrade) * 2);
+    //            else
+    //                e.Hit(damage + UpgradeManager.instance.redDiceUpgrade);
+    //            break;
+    //        case DiceType.Blue:
+    //            if (cri)
+    //                e.Hit((damage + UpgradeManager.instance.blueDiceUpgrade) * 2);
+    //            else
+    //                e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);
+    //            break;
+    //        case DiceType.Green:
+    //            if (cri)
+    //                e.Hit((damage + UpgradeManager.instance.greenDiceUpgrade) * 2);
+    //            else
+    //                e.Hit(damage + UpgradeManager.instance.greenDiceUpgrade);
+    //            break;
+    //        case DiceType.Purple:
+    //            if (cri)
+    //                e.Hit((damage + UpgradeManager.instance.purpleDiceUpgrade) * 2);
+    //            else
+    //                e.Hit(damage + UpgradeManager.instance.purpleDiceUpgrade);
+    //            break;
+    //        case DiceType.Yellow:
+    //            if (cri)
+    //                e.Hit((damage + UpgradeManager.instance.yellowDiceUpgrade) * 2);
+    //            else
+    //                e.Hit(damage + UpgradeManager.instance.yellowDiceUpgrade);
+    //            break;
+    //    }
+    //}
 
-    private void SkillAttack(Enemy e)
-    {
-        switch (diceType)
-        {
-            case DiceType.Red:
-                int layerMask = 1 << LayerMask.NameToLayer("Enemy");
-                Collider2D[] enemys = Physics2D.OverlapCircleAll(e.transform.position, 1f, layerMask);
+    //private void SkillAttack(Enemy e)
+    //{
+    //    switch (diceType)
+    //    {
+    //        case DiceType.Red:
+    //            int layerMask = 1 << LayerMask.NameToLayer("Enemy");
+    //            Collider2D[] enemys = Physics2D.OverlapCircleAll(e.transform.position, 1f, layerMask);
 
-                int len = enemys.Length;
+    //            int len = enemys.Length;
 
-                for(int i = 0; i < len; i++)
-                {
-                    enemys[i].GetComponent<Enemy>().Hit(damage + UpgradeManager.instance.redDiceUpgrade);
-                }
-                break;
-            case DiceType.Blue:
-                e.Slow(1f);
-                break;
-            case DiceType.Green:
-                break;
-            case DiceType.Purple:
-                break;
-            case DiceType.Yellow:
-                break;
-        }
-    }
+    //            for(int i = 0; i < len; i++)
+    //            {
+    //                enemys[i].GetComponent<Enemy>().Hit(damage + UpgradeManager.instance.redDiceUpgrade);
+    //            }
+    //            break;
+    //        case DiceType.Blue:
+    //            e.Slow(1f);
+    //            break;
+    //        case DiceType.Green:
+    //            break;
+    //        case DiceType.Purple:
+    //            break;
+    //        case DiceType.Yellow:
+    //            break;
+    //    }
+    //}
 
     public void StopAttackCoroutine()
     {

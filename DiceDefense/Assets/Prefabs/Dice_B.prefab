@@ -1082,8 +1082,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2236439458609756122}
   - component: {fileID: 7756689369059979757}
-  - component: {fileID: 6197181216887228119}
   - component: {fileID: 1775381877394099967}
+  - component: {fileID: 4282368190596707941}
   m_Layer: 0
   m_Name: Dice_B
   m_TagString: Untagged
@@ -1162,38 +1162,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6197181216887228119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5105159103508500430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c598fa998c7554f893eca91707a53d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  diceType: 1
-  damage: 0
-  mp: 0
-  perMP: 0
-  critical: 0
-  addDamage: 0
-  addMP: 0
-  addPerMP: 0
-  addCritical: 0
-  attackSpeed: 0
-  addAttackSpeed: 0
-  pos: {x: 0, y: 0}
-  _diceColor: {fileID: 5088692086686874896}
-  _diceLv:
-  - {fileID: 1620754412127426009}
-  - {fileID: 8782912099654457666}
-  - {fileID: 4775061511590198563}
-  - {fileID: 7241578318691426910}
-  - {fileID: 9202232925444895917}
-  - {fileID: 1535785990015274680}
 --- !u!61 &1775381877394099967
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1220,6 +1188,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
+--- !u!114 &4282368190596707941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105159103508500430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17191b47defd3f04b9444151ba3c5c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceType: 1
+  damage: 0
+  mp: 0
+  perMP: 0
+  critical: 0
+  addDamage: 0
+  addMP: 0
+  addPerMP: 0
+  addCritical: 0
+  attackSpeed: 0
+  addAttackSpeed: 0
+  pos: {x: 0, y: 0}
+  _diceColor: {fileID: 5088692086686874896}
+  _diceLv:
+  - {fileID: 1620754412127426009}
+  - {fileID: 8782912099654457666}
+  - {fileID: 4775061511590198563}
+  - {fileID: 7241578318691426910}
+  - {fileID: 9202232925444895917}
+  - {fileID: 1535785990015274680}
 --- !u!1 &5221884887623017213
 GameObject:
   m_ObjectHideFlags: 0
