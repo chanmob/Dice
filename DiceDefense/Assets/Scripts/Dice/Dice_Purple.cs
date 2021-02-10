@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Dice_Purple : Dice
 {
+    private const int CriticalDmg = 3;
+    private const int CriticalDmgPerLv = 1;
+
     public override void Attack(Enemy e)
     {
         bool cri = false;
@@ -20,6 +23,6 @@ public class Dice_Purple : Dice
 
     public override void SkillAttack(Enemy e)
     {
-
+        e.Hit((damage + UpgradeManager.instance.purpleDiceUpgrade) * CriticalDmg);
     }
 }

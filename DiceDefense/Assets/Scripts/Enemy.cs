@@ -14,15 +14,16 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator _coroutine;
 
-    private void Start()
+    private void OnEnable()
     {
+        isDie = false;
+
         _coroutine = MoveCoroutine();
         StartCoroutine(_coroutine);
     }
 
     public void Hit(int dmg)
     {
-        Debug.Log(dmg);
         _hp -= dmg;
 
         if(_hp <= 0)
@@ -47,6 +48,12 @@ public class Enemy : MonoBehaviour
             return;
 
         isDie = true;
+
+        if(_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
 
         InGameManager.instance.roundEnemy.Remove(this);
         ObjectPoolManager.instance.ReturnEnemy(this);

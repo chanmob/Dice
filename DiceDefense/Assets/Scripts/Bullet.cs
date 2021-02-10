@@ -5,7 +5,7 @@ using System;
 
 public class Bullet : MonoBehaviour
 {
-    private const float MoveSpeed = 0.01f;
+    private const float MoveSpeed = 0.05f;
 
     public Enemy targetEnemy;
     
@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if(targetEnemy != null || targetEnemy.gameObject.activeSelf)
+        if(targetEnemy != null && targetEnemy.gameObject.activeSelf)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetEnemy.transform.position, MoveSpeed);
         }

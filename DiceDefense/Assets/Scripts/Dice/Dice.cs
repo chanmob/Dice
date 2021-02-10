@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum DiceType
 {
@@ -15,6 +16,7 @@ public enum DiceType
 public abstract class Dice : MonoBehaviour
 {
     public const int MaxLv = 5;
+    private const int MaxMP = 10;
 
     public DiceType diceType = DiceType.None;
 
@@ -49,6 +51,9 @@ public abstract class Dice : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _diceLv;
+
+    [SerializeField]
+    private Image _image_MP;
 
     private IEnumerator _coroutine;
 
@@ -172,7 +177,7 @@ public abstract class Dice : MonoBehaviour
             {
                 Bullet b = ObjectPoolManager.instance.GetBullet();
 
-                if (mp >= 100)
+                if (mp >= MaxMP)
                 {
                     mp = 0;
                     b.AddAction(SkillAttack);
@@ -184,6 +189,7 @@ public abstract class Dice : MonoBehaviour
                     b.AddAction(Attack);
                 }
 
+                _image_MP.fillAmount = mp / (float)MaxMP;
                 b.transform.position = transform.position;
                 b.targetEnemy = e;
                 b.gameObject.SetActive(true);

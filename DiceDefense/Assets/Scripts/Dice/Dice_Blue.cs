@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Dice_Blue : Dice
 {
+    private const float SlowDown = 1.1f;
+    private const float SlowDownPerLv = 0.1f;
+    private const float SlowDownTime = 2f;
+
     public override void Attack(Enemy e)
     {
         bool cri = false;
@@ -20,6 +24,7 @@ public class Dice_Blue : Dice
 
     public override void SkillAttack(Enemy e)
     {
-
+        e.Slow(SlowDown);
+        e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);
     }
 }

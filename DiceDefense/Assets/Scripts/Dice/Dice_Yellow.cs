@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Dice_Yellow : Dice
 {
+    private const float ParalysisTimePerLv = 0.1f;
+    private const float ParalysisTime = 0.5f;
+
     public override void Attack(Enemy e)
     {
         bool cri = false;
@@ -20,6 +23,7 @@ public class Dice_Yellow : Dice
 
     public override void SkillAttack(Enemy e)
     {
-
+        e.Paralysis(ParalysisTime);
+        e.Hit(damage + UpgradeManager.instance.yellowDiceUpgrade);
     }
 }
