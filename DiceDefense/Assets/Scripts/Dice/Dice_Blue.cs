@@ -24,7 +24,7 @@ public class Dice_Blue : Dice
 
     public override void SkillAttack(Enemy e)
     {
-        e.Slow(SlowDown);
+        e.Slow(SlowDown, SlowDownTime);
         e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);
     }
 }

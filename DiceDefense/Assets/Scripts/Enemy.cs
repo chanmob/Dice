@@ -9,14 +9,21 @@ public class Enemy : MonoBehaviour
     private int _hp;
 
     private float speed = 0.0075f;
+    private float slowdown = 0;
+    private float lastSlowdownTime;
 
+    private bool blockParalysis = false;
     private bool isDie = false;
+    public bool isSlowDown = false;
+    public bool isParalysis = false;
 
     private IEnumerator _coroutine;
+    private IEnumerator _paralysisCoroutine;
 
     private void OnEnable()
     {
         isDie = false;
+        slowdown = 0;
 
         _coroutine = MoveCoroutine();
         StartCoroutine(_coroutine);
@@ -32,14 +39,31 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Slow(float amount)
+    public void Slow(float amount, float time)
     {
+        if(slowdown < amount)
+            slowdown = amount;
 
+        isSlowDown = true;
+        lastSlowdownTime = Time.time + time;
     }
 
     public void Paralysis(float time)
     {
+        if (blockParalysis)
+            return;
 
+        blockParalysis = true;
+        isParalysis = true;
+
+        if(_paralysisCoroutine != null)
+        {
+            StopCoroutine(_paralysisCoroutine);
+            _paralysisCoroutine = null;
+        }
+
+        _paralysisCoroutine = ParalysisCoroutine(time);
+        StartCoroutine(_paralysisCoroutine);
     }
 
     private void Die()
@@ -66,7 +90,15 @@ public class Enemy : MonoBehaviour
 
         while (idx < lineLen)
         {
-            transform.position = Vector2.MoveTowards(transform.position, InGameManager.instance.lines[idx].position, speed);
+            if (isSlowDown && Time.time >= lastSlowdownTime)
+            {
+                isSlowDown = false;
+                slowdown = 0;
+            }
+
+            yield return new WaitUntil(() => isParalysis == false);
+
+            transform.position = Vector2.MoveTowards(transform.position, InGameManager.instance.lines[idx].position, speed * (1 - slowdown));
 
             float diff = Vector2.Distance(transform.position, InGameManager.instance.lines[idx].position);
 
@@ -75,5 +107,19 @@ public class Enemy : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private IEnumerator ParalysisCoroutine(float time)
+    {
+        isParalysis = true;
+
+        yield return new WaitForSeconds(time);
+
+        isParalysis = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        blockParalysis = false;
+        _paralysisCoroutine = null;
     }
 }
