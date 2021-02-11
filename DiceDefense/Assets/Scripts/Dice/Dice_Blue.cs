@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dice_Blue : Dice
 {
-    private const float SlowDown = 1.1f;
+    private const float SlowDown = 0.1f;
     private const float SlowDownPerLv = 0.1f;
     private const float SlowDownTime = 2f;
 
