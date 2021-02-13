@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -20,6 +21,13 @@ public class Enemy : MonoBehaviour
     private IEnumerator _coroutine;
     private IEnumerator _paralysisCoroutine;
 
+    private Text _text_HP;
+
+    private void Awake()
+    {
+        _text_HP = GetComponentInChildren<Text>();
+    }
+
     private void OnEnable()
     {
         isDie = false;
@@ -32,11 +40,18 @@ public class Enemy : MonoBehaviour
     public void Hit(int dmg)
     {
         _hp -= dmg;
+        _text_HP.text = _hp.ToString();
 
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             Die();
         }
+    }
+
+    public void SetHPText(int hp)
+    {
+        _hp = hp;
+        _text_HP.text = _hp.ToString();
     }
 
     public void Slow(float amount, float time)

@@ -65,7 +65,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: bb2e7fcf7e4d8bb4e9269dfdbba7c79e, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca42be8db6ec3cb4d9a497a63f08eaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 3
   isSlowDown: 0
   isParalysis: 0
 --- !u!61 &4611497282583936406
@@ -373,7 +372,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 095755c7a1bd1664c939db27c3b4f0ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 477573310f2e2244f96482c320e94c16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

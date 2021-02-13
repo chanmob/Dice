@@ -100,7 +100,8 @@ public class InGameManager : Singleton<InGameManager>
             for(int i = 0; i < _round; i++)
             {
                 Enemy e = ObjectPoolManager.instance.GetEnemy();
-                roundEnemy.Add(e);
+                e.SetHPText(_round * ((_round / 10) + 1));
+                roundEnemy.Add(e); 
             }
 
             for(int i = 0; i < _round; i++)
