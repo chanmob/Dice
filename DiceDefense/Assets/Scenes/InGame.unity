@@ -264,7 +264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: 0
 --- !u!222 &82726020
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -555,6 +555,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 274534145}
+  - component: {fileID: 274534146}
   m_Layer: 5
   m_Name: UI_InGameMainUI
   m_TagString: Untagged
@@ -582,6 +583,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &274534146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274534144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1eb08ec4155e343a1c80feb2356ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text_Money: {fileID: 82726019}
 --- !u!1 &304762789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
+  ui_InGameMainUI: {fileID: 274534146}
 --- !u!1 &1133644396
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,6 +79,7 @@ public class Enemy : MonoBehaviour
             _coroutine = null;
         }
 
+        InGameManager.instance.GetMoney(10);
         InGameManager.instance.roundEnemy.Remove(this);
         ObjectPoolManager.instance.ReturnEnemy(this);
     }

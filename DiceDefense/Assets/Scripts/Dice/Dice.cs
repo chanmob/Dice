@@ -157,6 +157,7 @@ public abstract class Dice : MonoBehaviour
     private void Start()
     {
         ResetDiceAbility();
+        StartAttackCoroutine();
     }
 
     private IEnumerator AttackCoroutine()
@@ -345,7 +346,10 @@ public abstract class Dice : MonoBehaviour
 
     public void StartAttackCoroutine()
     {
-        _coroutine = AttackCoroutine();
-        StartCoroutine(_coroutine);
+        if(_coroutine == null)
+        {
+            _coroutine = AttackCoroutine();
+            StartCoroutine(_coroutine);
+        }
     }
 }
