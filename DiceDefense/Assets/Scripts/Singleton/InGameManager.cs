@@ -5,6 +5,7 @@ using UnityEngine;
 public class InGameManager : Singleton<InGameManager>
 {
     private const float GenerationCycleTime = 0.5f;
+    private const float RoundWaitTime = 5f;
 
     public readonly float InfoDistance = 0.3f;
     public readonly float CollaboDistance = 0.5f;
@@ -83,6 +84,14 @@ public class InGameManager : Singleton<InGameManager>
     {
         while (true)
         {
+            yield return new WaitForSeconds(RoundWaitTime);
+            
+            int RoundStartDiceCnt = createdDice.Count;
+            for (int i = 0; i < RoundStartDiceCnt; i++)
+            {
+                createdDice[i].StartAttackCoroutine();
+            }
+
             _round++;
 
             for(int i = 0; i < _round; i++)
@@ -99,6 +108,12 @@ public class InGameManager : Singleton<InGameManager>
             }
 
             yield return new WaitUntil(() => roundEnemy.Count == 0);
+
+            int RoundEndDiceCnt = createdDice.Count;
+            for (int i = 0; i < RoundEndDiceCnt; i++)
+            {
+                createdDice[i].ResetDiceOnRoundEnd();
+            }
         }
     }
 

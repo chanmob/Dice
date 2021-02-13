@@ -104,6 +104,7 @@ public abstract class Dice : MonoBehaviour
                 {
                     collaboDice.Collabo();
                     InGameManager.instance.createdDice.Remove(this);
+                    InGameManager.instance.createPositionList.Add(pos);
                     gameObject.SetActive(false);
                 }
                 else
@@ -154,13 +155,7 @@ public abstract class Dice : MonoBehaviour
 
     private void Start()
     {
-        damage = _damage;
-        mp = _mp;
-        perMP = _perMP;
-        critical = _critical;
-        attackSpeed = _attackSpeed;
-
-        StartCoroutine(AttackCoroutine());
+        ResetDiceAbility();
     }
 
     private IEnumerator AttackCoroutine()
@@ -176,6 +171,12 @@ public abstract class Dice : MonoBehaviour
             if (e != null)
             {
                 Bullet b = ObjectPoolManager.instance.GetBullet();
+
+                Color c;
+                if (ColorUtility.TryParseHtmlString(InGameManager.instance.DiceColorHexCode[(int)diceType], out c))
+                {
+                    b.SetBulletColor(c);
+                }
 
                 if (mp >= MaxMP)
                 {
@@ -195,6 +196,15 @@ public abstract class Dice : MonoBehaviour
                 b.gameObject.SetActive(true);
             }
         }
+    }
+
+    private void ResetDiceAbility()
+    {
+        damage = _damage;
+        mp = _mp;
+        perMP = _perMP;
+        critical = _critical;
+        attackSpeed = _attackSpeed;
     }
 
     public abstract void Attack(Enemy e);
@@ -317,5 +327,17 @@ public abstract class Dice : MonoBehaviour
         }
 
         _diceLv[lv].SetActive(true);
+    }
+
+    public void ResetDiceOnRoundEnd()
+    {
+        StopAttackCoroutine();
+        ResetDiceAbility();
+    }
+
+    public void StartAttackCoroutine()
+    {
+        _coroutine = AttackCoroutine();
+        StartCoroutine(_coroutine);
     }
 }

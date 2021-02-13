@@ -9,7 +9,14 @@ public class Bullet : MonoBehaviour
 
     public Enemy targetEnemy;
     
-    private Action<Enemy> act;
+    private Action<Enemy> _act;
+
+    private SpriteRenderer _sr;
+
+    private void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+    }
 
     private void Update()
     {
@@ -19,7 +26,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            act = null;
+            _act = null;
             ObjectPoolManager.instance.ReturnBullet(this);
         }
     }
@@ -28,18 +35,24 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject == targetEnemy.gameObject)
         {
-            if(act != null)
+            if(_act != null)
             {
-                act.Invoke(targetEnemy);
-                act = null;
+                _act.Invoke(targetEnemy);
+                _act = null;
             }
 
             ObjectPoolManager.instance.ReturnBullet(this);
         }
     }
 
-    public void AddAction(Action<Enemy> a)
+    public void AddAction(Action<Enemy> act)
     {
-        act += a;
+        _act += act;
     }
+
+    public void SetBulletColor(Color c)
+    {
+        _sr.color = c;
+    }
+
 }
