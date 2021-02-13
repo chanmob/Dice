@@ -77,6 +77,9 @@ public class InGameManager : Singleton<InGameManager>
             }
         }
 
+        if (enemy.gameObject.activeSelf == false)
+            return null;
+
         return enemy;
     }
 
