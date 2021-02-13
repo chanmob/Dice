@@ -142,6 +142,7 @@ public abstract class Dice : MonoBehaviour
 
                     InGameManager.instance.createPositionList.Add(pos);
                     InGameManager.instance.createPositionList.Remove(tp);
+                    pos = tp;
                     transform.position = tp;
                 }
                 else
@@ -180,17 +181,16 @@ public abstract class Dice : MonoBehaviour
 
                 if (mp >= MaxMP)
                 {
-                    mp = 0;
+                    SetMP(0);
                     b.AddAction(SkillAttack);
                 }
 
                 else
                 {
-                    mp += perMP;
+                    SetMP(mp + perMP);
                     b.AddAction(Attack);
                 }
 
-                _image_MP.fillAmount = mp / (float)MaxMP;
                 b.transform.position = transform.position;
                 b.targetEnemy = e;
                 b.gameObject.SetActive(true);
@@ -205,6 +205,14 @@ public abstract class Dice : MonoBehaviour
         perMP = _perMP;
         critical = _critical;
         attackSpeed = _attackSpeed;
+
+        SetMP(mp);
+    }
+
+    private void SetMP(int mp)
+    {
+        this.mp = mp;
+        _image_MP.fillAmount = mp / (float)MaxMP;
     }
 
     public abstract void Attack(Enemy e);

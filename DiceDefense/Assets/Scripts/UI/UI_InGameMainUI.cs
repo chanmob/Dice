@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class UI_InGameMainUI : MonoBehaviour
 {
+    [SerializeField]
+    private Text _text_Money;
+
+    public void RefreshMoneyText(int money)
+    {
+        _text_Money.text = money.ToString();
+    }
+
     public void PurchaseDice()
     {
         int cost = InGameManager.instance.Count * 10 + 10;

@@ -120,6 +120,7 @@ public class InGameManager : Singleton<InGameManager>
     public void GetMoney(int money)
     {
         _money += money;
+        InGameUIManager.instance.ui_InGameMainUI.RefreshMoneyText(_money);
     }
 
     public Vector2? GetCreatePoisition()
