@@ -8,7 +8,7 @@ public class Dice_Blue : Dice
     private const float SlowDownPerLv = 0.1f;
     private const float SlowDownTime = 2f;
 
-    public override void Attack(Enemy e)
+    public override void Attack(Enemy e, Bullet b)
     {
         bool cri = false;
 
@@ -17,12 +17,24 @@ public class Dice_Blue : Dice
             cri = true;
 
         if (cri)
+        {
             e.Hit((damage + UpgradeManager.instance.blueDiceUpgrade) * 2);
+
+            ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(true);
+            p.transform.position = b.transform.position;
+            p.gameObject.SetActive(true);
+        }
         else
+        {
             e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);
+
+            ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(false);
+            p.transform.position = b.transform.position;
+            p.gameObject.SetActive(true);
+        }
     }
 
-    public override void SkillAttack(Enemy e)
+    public override void SkillAttack(Enemy e, Bullet b)
     {
         e.Slow(SlowDown, SlowDownTime);
         e.Hit(damage + UpgradeManager.instance.blueDiceUpgrade);

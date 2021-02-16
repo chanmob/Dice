@@ -216,8 +216,8 @@ public abstract class Dice : MonoBehaviour
         _image_MP.fillAmount = mp / (float)MaxMP;
     }
 
-    public abstract void Attack(Enemy e);
-    public abstract void SkillAttack(Enemy e);
+    public abstract void Attack(Enemy e, Bullet b);
+    public abstract void SkillAttack(Enemy e, Bullet b);
 
     //private void Attack(Enemy e)
     //{

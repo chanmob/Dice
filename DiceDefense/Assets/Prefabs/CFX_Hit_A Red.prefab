@@ -4714,6 +4714,7 @@ GameObject:
   - component: {fileID: 854950676831577422}
   - component: {fileID: 854950676817420302}
   - component: {fileID: 854950676817451438}
+  - component: {fileID: 4307402389038469750}
   m_Layer: 0
   m_Name: CFX_Hit_A Red
   m_TagString: FxTemporaire
@@ -9371,3 +9372,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &4307402389038469750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854950676831222126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cdb1d516eb1c94f96720c80171e201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cri: 1

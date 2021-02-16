@@ -23,9 +23,12 @@ public class Enemy : MonoBehaviour
 
     private Text _text_HP;
 
+    private SpriteRenderer _spriteRenderer;
+
     private void Awake()
     {
         _text_HP = GetComponentInChildren<Text>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
@@ -61,6 +64,14 @@ public class Enemy : MonoBehaviour
 
         isSlowDown = true;
         lastSlowdownTime = Time.time + time;
+
+        if (!isParalysis)
+        {
+            Color slowDownColor;
+
+            if(ColorUtility.TryParseHtmlString(InGameManager.instance.DiceColorHexCode[(int)DiceType.Blue], out slowDownColor))
+                _spriteRenderer.color = slowDownColor;
+        }
     }
 
     public void Paralysis(float time)
@@ -129,7 +140,22 @@ public class Enemy : MonoBehaviour
     {
         isParalysis = true;
 
+        Color slowDownColor;
+
+        if (ColorUtility.TryParseHtmlString(InGameManager.instance.DiceColorHexCode[(int)DiceType.Yellow], out slowDownColor))
+            _spriteRenderer.color = slowDownColor;
+
         yield return new WaitForSeconds(time);
+
+        if (isSlowDown)
+        {
+            if (ColorUtility.TryParseHtmlString(InGameManager.instance.DiceColorHexCode[(int)DiceType.Blue], out slowDownColor))
+                _spriteRenderer.color = slowDownColor;
+        }
+        else
+        {
+            _spriteRenderer.color = Color.white;
+        }
 
         isParalysis = false;
 

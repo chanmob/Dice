@@ -31,9 +31,18 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
     private Stack<Bullet> _stack_Bullet;
 
+    [SerializeField]
+    private ParticleDisable _particle_Hit;
+    [SerializeField]
+    private ParticleDisable _particle_CriticalHit;
+
+    private Stack<ParticleDisable> _stack_HitParticle;
+    private Stack<ParticleDisable> _stack_CriticalHitParticle;
+
     public Transform diceParent;
     public Transform enemyParent;
     public Transform bulletParent;
+    public Transform particleParent;
 
     protected override void OnAwake()
     {
@@ -48,6 +57,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         _stack_Enemy = new Stack<Enemy>();
 
         _stack_Bullet = new Stack<Bullet>();
+
+        _stack_HitParticle = new Stack<ParticleDisable>();
+        _stack_CriticalHitParticle = new Stack<ParticleDisable>();
     }
 
     public Dice GetDice(DiceType diceType)
@@ -225,6 +237,63 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             _stack_Bullet.Push(newBullet);
             newBullet.transform.SetParent(bulletParent);
             newBullet.gameObject.SetActive(false);
+        }
+    }
+
+    public ParticleDisable GetHitParticle(bool critical)
+    {
+        if (critical)
+        {
+            if (_stack_CriticalHitParticle.Count == 0)
+                MakeParticle(1, true);
+
+            ParticleDisable particle = _stack_CriticalHitParticle.Pop();
+            return particle;
+        }
+        else
+        {
+            if (_stack_HitParticle.Count == 0)
+                MakeParticle(1, false);
+
+            ParticleDisable particle = _stack_HitParticle.Pop();
+            return particle;
+        }
+    }
+
+    public void ReturnParticle(ParticleDisable particle)
+    {
+        if (particle.cri)
+        {
+            _stack_CriticalHitParticle.Push(particle);
+        }
+        else
+        {
+            _stack_HitParticle.Push(particle);
+        }
+
+        if (particle.gameObject.activeSelf)
+            particle.gameObject.SetActive(false);
+    }
+
+    private void MakeParticle(int count, bool cri)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ParticleDisable newParticle;
+
+            if (cri)
+            {
+                newParticle = Instantiate(_particle_CriticalHit);
+                _stack_CriticalHitParticle.Push(newParticle);
+            }
+            else
+            {
+                newParticle = Instantiate(_particle_Hit);
+                _stack_HitParticle.Push(newParticle);
+            }
+
+            newParticle.transform.SetParent(particleParent);
+            newParticle.gameObject.SetActive(false);
         }
     }
 }

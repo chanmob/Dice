@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
 
     public Enemy targetEnemy;
     
-    private Action<Enemy> _act;
+    private Action<Enemy, Bullet> _act;
 
     private SpriteRenderer _sr;
 
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         {
             if(_act != null)
             {
-                _act.Invoke(targetEnemy);
+                _act.Invoke(targetEnemy, this);
                 _act = null;
             }
 
@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void AddAction(Action<Enemy> act)
+    public void AddAction(Action<Enemy, Bullet> act)
     {
         _act += act;
     }
