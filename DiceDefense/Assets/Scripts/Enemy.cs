@@ -36,6 +36,11 @@ public class Enemy : MonoBehaviour
         isDie = false;
         slowdown = 0;
 
+        isSlowDown = false;
+        isParalysis = false;
+
+        _spriteRenderer.color = Color.white;
+
         _coroutine = MoveCoroutine();
         StartCoroutine(_coroutine);
     }

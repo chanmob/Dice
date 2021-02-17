@@ -24,7 +24,7 @@ public class Dice_Green : Dice
             e.Hit((damage + UpgradeManager.instance.greenDiceUpgrade) * 2);
 
             ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(true);
-            p.transform.position = b.transform.position;
+            p.transform.position = e.transform.position;
             p.gameObject.SetActive(true);
         }
         else
@@ -32,7 +32,7 @@ public class Dice_Green : Dice
             e.Hit(damage + UpgradeManager.instance.greenDiceUpgrade);
 
             ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(false);
-            p.transform.position = b.transform.position;
+            p.transform.position = e.transform.position;
             p.gameObject.SetActive(true);
         }
     }

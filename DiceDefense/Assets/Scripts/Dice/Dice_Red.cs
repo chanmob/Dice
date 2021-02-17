@@ -17,7 +17,7 @@ public class Dice_Red : Dice
             e.Hit((damage + UpgradeManager.instance.redDiceUpgrade) * 2);
 
             ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(true);
-            p.transform.position = b.transform.position;
+            p.transform.position = e.transform.position;
             p.gameObject.SetActive(true);
         }
         else
@@ -25,13 +25,16 @@ public class Dice_Red : Dice
             e.Hit(damage + UpgradeManager.instance.redDiceUpgrade);
 
             ParticleDisable p = ObjectPoolManager.instance.GetHitParticle(false);
-            p.transform.position = b.transform.position;
+            p.transform.position = e.transform.position;
             p.gameObject.SetActive(true);
         }
     }
 
     public override void SkillAttack(Enemy e, Bullet b)
     {
+        CircleEffect ce = ObjectPoolManager.instance.GetCircleEffect();
+        ce.transform.position = e.transform.position;
+
         int layerMask = 1 << LayerMask.NameToLayer("Enemy");
         Collider2D[] enemys = Physics2D.OverlapCircleAll(e.transform.position, 1f, layerMask);
 

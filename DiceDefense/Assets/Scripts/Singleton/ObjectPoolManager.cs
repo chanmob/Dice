@@ -39,10 +39,16 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     private Stack<ParticleDisable> _stack_HitParticle;
     private Stack<ParticleDisable> _stack_CriticalHitParticle;
 
+    [SerializeField]
+    private CircleEffect _effect_Circle;
+
+    private Stack<CircleEffect> _stack_CircleEffect;
+
     public Transform diceParent;
     public Transform enemyParent;
     public Transform bulletParent;
     public Transform particleParent;
+    public Transform circleParent;
 
     protected override void OnAwake()
     {
@@ -60,8 +66,11 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 
         _stack_HitParticle = new Stack<ParticleDisable>();
         _stack_CriticalHitParticle = new Stack<ParticleDisable>();
+
+        _stack_CircleEffect = new Stack<CircleEffect>();
     }
 
+    #region Dice
     public Dice GetDice(DiceType diceType)
     {
         Dice dice = null;
@@ -183,7 +192,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             newDice.gameObject.SetActive(false);
         }
     }
+    #endregion
 
+    #region Enemy
     public Enemy GetEnemy()
     {
         if (_stack_Enemy.Count == 0)
@@ -211,7 +222,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             newEnemy.gameObject.SetActive(false);
         }
     }
+    #endregion
 
+    #region Bullet
     public Bullet GetBullet()
     {
         if (_stack_Bullet.Count == 0)
@@ -239,7 +252,9 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             newBullet.gameObject.SetActive(false);
         }
     }
+    #endregion
 
+    #region Particle
     public ParticleDisable GetHitParticle(bool critical)
     {
         if (critical)
@@ -296,4 +311,35 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             newParticle.gameObject.SetActive(false);
         }
     }
+    #endregion
+
+    #region Circle
+    public CircleEffect GetCircleEffect()
+    {
+        if (_stack_CircleEffect.Count == 0)
+            MakeCircle(1);
+
+        CircleEffect circleEffect = _stack_CircleEffect.Pop();
+        return circleEffect;
+    }
+
+    public void ReturnCircle(CircleEffect c)
+    {
+        _stack_CircleEffect.Push(c);
+
+        if (c.gameObject.activeSelf)
+            c.gameObject.SetActive(false);
+    }
+
+    private void MakeCircle(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            CircleEffect newCircleEffect = Instantiate(_effect_Circle);
+            _stack_CircleEffect.Push(newCircleEffect);
+            newCircleEffect.transform.SetParent(circleParent);
+            newCircleEffect.gameObject.SetActive(false);
+        }
+    }
+    #endregion
 }
